@@ -45,6 +45,10 @@ public class mainClass
             report2.createFrequencyTable();
             report2.sortByComparator();  
             
+            double[] freqIndex = report2.compareIndex(report1, report2);
+            System.out.println("New words added: " + freqIndex[0]);
+            System.out.println("Deleted words: " + freqIndex[1]);
+            
             printJTable(report1.getMap());
             printJTable(report2.getMap());
         } 

@@ -20,6 +20,7 @@ public class Document
     private Map<String, Integer> sortedTable;
     private File file;
     private String filePath;
+    private int numberofWords;
     
     public Document(String fileContents, File targetFile) throws FileNotFoundException 
     {
@@ -60,6 +61,44 @@ public class Document
         return sortedTable;
     }
     
+    public int getNumberOfWords()
+    {
+        return numberofWords;
+    }
+    
+    public double[] compareIndex(Document oldIndex, Document newIndex)
+    {
+        double newWords = 0;
+        double deletedWords = 0;
+        Map<String, Integer> oldEntry = oldIndex.getMap();
+        Map<String, Integer> newEntry = newIndex.getMap();
+        
+        for (Map.Entry<String, Integer> pdf1 : oldEntry.entrySet())
+        {
+            for(Map.Entry<String, Integer> pdf2 : newEntry.entrySet())
+            {
+                if(pdf1.getKey() == pdf2.getKey())
+                {
+                    newWords = newWords + (double) pdf2.getValue() - (double) pdf1.getValue();
+                    oldEntry.remove(pdf1.getKey());
+                    newEntry.remove(pdf2.getKey());
+                }
+            }
+        }
+        
+        for (Map.Entry<String, Integer> addedWords : newEntry.entrySet())
+        {
+            newWords = newWords + (double) addedWords.getValue();
+        }
+        
+        for (Map.Entry<String, Integer> removedWords : oldEntry.entrySet())
+        {
+            deletedWords = deletedWords + (double) removedWords.getValue();
+        }
+        double[] temp = {newWords, deletedWords};
+        return temp;
+    }
+    
     private static boolean containsNumber(String s) throws FileNotFoundException
     {
         if (s.contains("0") || s.contains("1") || s.contains("2") || s.contains("3")
@@ -88,6 +127,7 @@ public class Document
         Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : list)
         {
+            numberofWords = numberofWords + entry.getValue();
             sortedMap.put(entry.getKey(), entry.getValue());
         }
         
