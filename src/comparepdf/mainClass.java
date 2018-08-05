@@ -24,17 +24,17 @@ public class mainClass
         reader.close();
         
         PdfManager pdfmanager = new PdfManager();
-        pdfmanager.setFilePath("/Users/Michael/Desktop/test/" + s);
+        pdfmanager.setFilePath("./PDF/" + s);
         
         PdfManager pdfmanager2 = new PdfManager();
-        pdfmanager2.setFilePath("/Users/Michael/Desktop/test/" + s2);
+        pdfmanager2.setFilePath("./PDF/" + s2);
         
         try 
         {
-            File f = new File("/Users/Michael/Desktop/test/" + s + ".txt");
+            File f = new File("./PDF/" + s + ".txt");
             String textFromFile = pdfmanager.ToText();
             
-            File f2 = new File("/Users/Michael/Desktop/test/" + s2 + ".txt");
+            File f2 = new File("./PDF/" + s2 + ".txt");
             String textFromFile2 = pdfmanager2.ToText();
             
             Document report1 = new Document(textFromFile, f);

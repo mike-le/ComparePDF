@@ -47,10 +47,11 @@ public class Document
             String nextWord = s.next().toLowerCase();
             if (containsNumber(nextWord) != true) {
                 if (frequencyTable.containsKey(nextWord)) {
-                    frequencyTable.replace(nextWord, frequencyTable.get(nextWord) + 1);
+                    frequencyTable.put(nextWord, frequencyTable.get(nextWord) + 1);
                 } else {
                     frequencyTable.put(nextWord, 1);
                 }
+                
             }
         }
         s.close();
