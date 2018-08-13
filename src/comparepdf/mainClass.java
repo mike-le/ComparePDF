@@ -22,12 +22,12 @@ public class mainClass
         System.out.println("Enter the name of the PDF 2: ");
         String s2 = reader.next(); 
         reader.close();
-        
+       
         PdfManager pdfmanager = new PdfManager();
-        pdfmanager.setFilePath("./PDF/" + s);
+        pdfmanager.setFilePath("./PDF/" + s + ".pdf");
         
         PdfManager pdfmanager2 = new PdfManager();
-        pdfmanager2.setFilePath("./PDF/" + s2);
+        pdfmanager2.setFilePath("./PDF/" + s2 + ".pdf");
         
         try 
         {
