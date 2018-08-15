@@ -14,6 +14,8 @@ import javax.swing.JTable;
 
 public class mainClass 
 {
+    //String Metric Algorithms
+    // Longest Common Subsequence
     public static void main(String[] args) throws PrinterException 
     {
         Scanner reader = new Scanner(System.in);  // Reading from System.in
