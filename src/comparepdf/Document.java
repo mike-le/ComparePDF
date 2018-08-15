@@ -156,9 +156,35 @@ public class Document
         return allWords;
     }
     
-    public String[][] LCSLength(String[] s1, String[] s2)
+    public int[][] LCSLength(String[] s1, String[] s2)
     {
-        String[][] LCSmatrix = new String[s1.length][s2.length];
+        int[][] LCSmatrix = new int[s1.length][s2.length];
+        for (int i = 0; i < s1.length; i++) {
+            LCSmatrix[i][0] = 0;
+        }
+        for (int j = 0; j < s2.length; j++) {
+            LCSmatrix[0][j] = 0;
+        }
+        for (int i = 1; i < s1.length; i++) {
+            for (int j = 1; j < s2.length; j++) {
+                if(s1[i] == s2[j])
+                {
+                    LCSmatrix[i][j] = LCSmatrix[i-1][j-1] + 1;
+                }
+                else
+                {
+                    if(LCSmatrix[i][j-1] > LCSmatrix[i-1][j])
+                    {
+                        LCSmatrix[i][j] =  LCSmatrix[i][j-1];
+                    }
+                    else
+                    {
+                        LCSmatrix[i][j] = LCSmatrix[i-1][j];
+                    }
+                    
+                } 
+            }
+        }
         return LCSmatrix;
     }
     
