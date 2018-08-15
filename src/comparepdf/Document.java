@@ -3,6 +3,7 @@ package comparepdf;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ public class Document
     private String filePath;
     private int numberofWords;
     
+    String[] wordArray;
+    
     public Document(String fileContents, File targetFile) throws FileNotFoundException 
     {
         frequencyTable = new HashMap<String, Integer>();
@@ -30,6 +33,10 @@ public class Document
         PrintWriter writer = new PrintWriter(targetFile.getPath());
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(fileContents);
+        
+        wordArray = stringToArray(fileContents);
+        
+        //trims the .txt file
         while (m.find()) 
         {
             String trimmedWord = fileContents.substring(m.start(), m.end());
@@ -133,6 +140,26 @@ public class Document
         }
         
         this.sortedTable = sortedMap;       
+    }
+    
+    public String[] stringToArray(String textFromFile){
+        Scanner s = new Scanner(textFromFile);
+        ArrayList<String> words = new ArrayList<String>();
+        while (s.hasNext()) {
+            String nextWord = s.next().toLowerCase();
+            words.add(nextWord);
+        }
+        String[] allWords = new String[words.size()];
+        allWords = words.toArray(allWords);
+        System.out.println("stringToArray test: " + allWords.length);
+        s.close();
+        return allWords;
+    }
+    
+    public String[][] LCSLength(String[] s1, String[] s2)
+    {
+        String[][] LCSmatrix = new String[s1.length][s2.length];
+        return LCSmatrix;
     }
     
 }
