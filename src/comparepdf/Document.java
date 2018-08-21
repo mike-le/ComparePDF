@@ -33,9 +33,9 @@ public class Document
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(fileContents);
         
-        //wordArray = stringToArray(fileContents);
+        wordArray = stringToArray(fileContents.substring(0, 10000) + "this is a test");
         //Test
-        wordArray = stringToArray("This is a test.");
+        //wordArray = stringToArray("This is a test.");
         
         
         //trims the .txt file
