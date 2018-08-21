@@ -22,8 +22,7 @@ public class Document
     private File file;
     private String filePath;
     private int numberofWords;
-    
-    String[] wordArray;
+    private String[] wordArray;
     
     public Document(String fileContents, File targetFile) throws FileNotFoundException 
     {
@@ -34,7 +33,10 @@ public class Document
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(fileContents);
         
-        wordArray = stringToArray(fileContents);
+        //wordArray = stringToArray(fileContents);
+        //Test
+        wordArray = stringToArray("This is a test.");
+        
         
         //trims the .txt file
         while (m.find()) 
@@ -45,6 +47,7 @@ public class Document
                 writer.print(trimmedWord + " ");
             }
         }
+        
         writer.close();
     }
     
@@ -72,6 +75,11 @@ public class Document
     public int getNumberOfWords()
     {
         return numberofWords;
+    }
+    
+    public String[] getWordArray()
+    {
+        return wordArray;
     }
     
     public double[] compareIndex(Document oldIndex, Document newIndex)
@@ -156,6 +164,26 @@ public class Document
         return allWords;
     }
     
+    public String printLCS(int[][] LCSmatrix, String[] s1, String s2[], int i, int j)
+    {
+        if(i == 0 || j == 0)
+        {
+            return "";
+        }
+        if(s1[i].equals(s2[j]))
+        {
+            return printLCS(LCSmatrix, s1, s2, i-1, j-1) + s1[i];
+        }
+        if(LCSmatrix[i][j - 1] > LCSmatrix[i-1][j])
+        {
+            return printLCS(LCSmatrix, s1, s2, i, j-1);
+        }
+        else
+        {
+            return printLCS(LCSmatrix, s1, s2, i-1, j);
+        }
+    }
+    
     public int[][] LCSLength(String[] s1, String[] s2)
     {
         int[][] LCSmatrix = new int[s1.length][s2.length];
@@ -181,7 +209,6 @@ public class Document
                     {
                         LCSmatrix[i][j] = LCSmatrix[i-1][j];
                     }
-                    
                 } 
             }
         }

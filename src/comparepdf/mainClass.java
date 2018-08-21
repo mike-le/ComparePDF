@@ -14,7 +14,7 @@ import javax.swing.JTable;
 
 public class mainClass 
 {
-    //String Metric Algorithms
+    // String Metric Algorithms
     // Longest Common Subsequence
     public static void main(String[] args) throws PrinterException 
     {
@@ -41,11 +41,17 @@ public class mainClass
             
             Document report1 = new Document(textFromFile, f);
             report1.createFrequencyTable();
-            report1.sortByComparator();       
+            report1.sortByComparator();   
             
             Document report2 = new Document(textFromFile2, f2);
             report2.createFrequencyTable();
             report2.sortByComparator();  
+            
+            String[] wordArr1 = report1.getWordArray();
+            String[] wordArr2 = report2.getWordArray();
+            int[][] LCSmatrix = report1.LCSLength(wordArr1, wordArr2);
+            System.out.println(report1.printLCS(LCSmatrix, wordArr1, wordArr2, wordArr1.length - 1, wordArr2.length - 1));
+            
             
             double[] freqIndex = report2.compareIndex(report1, report2);
             System.out.println("New words added: " + freqIndex[0]);
