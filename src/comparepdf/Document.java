@@ -33,7 +33,7 @@ public class Document
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(fileContents);
         
-        wordArray = stringToArray(fileContents.substring(0, 10000) + "this is a test");
+        wordArray = stringToArray(fileContents);
         //Test
         //wordArray = stringToArray("This is a test.");
         
@@ -168,11 +168,11 @@ public class Document
     {
         if(i == 0 || j == 0)
         {
-            return "";
+            return " ";
         }
         if(s1[i].equals(s2[j]))
         {
-            return printLCS(LCSmatrix, s1, s2, i-1, j-1) + s1[i];
+            return printLCS(LCSmatrix, s1, s2, i-1, j-1) + " " + s1[i];
         }
         if(LCSmatrix[i][j - 1] > LCSmatrix[i-1][j])
         {
@@ -195,7 +195,7 @@ public class Document
         }
         for (int i = 1; i < s1.length; i++) {
             for (int j = 1; j < s2.length; j++) {
-                if(s1[i] == s2[j])
+                if(s1[i].equals(s2[j]))
                 {
                     LCSmatrix[i][j] = LCSmatrix[i-1][j-1] + 1;
                 }
@@ -212,6 +212,14 @@ public class Document
                 } 
             }
         }
+        /*
+        for (int i = 0; i < s1.length; i++) {
+            for (int j = 0; j < s2.length; j++) {
+                System.out.print(LCSmatrix[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        */
         return LCSmatrix;
     }
     
