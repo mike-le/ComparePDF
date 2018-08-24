@@ -168,7 +168,7 @@ public class Document
     {
         if(i == 0 || j == 0)
         {
-            return " ";
+            return s1[i] + " ";
         }
         if(s1[i].equals(s2[j]))
         {
