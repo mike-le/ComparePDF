@@ -2,6 +2,8 @@ package comparepdf;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
@@ -20,17 +22,14 @@ public class PdfManager {
     private File file;
 
     public PdfManager() {
-
-    }
-
-    public String ToText() throws IOException {
         this.pdfStripper = null;
         this.pdDoc = null;
         this.cosDoc = null;
+    }
 
+    public String ToText() throws IOException {
         file = new File(filePath);
         parser = new PDFParser(new RandomAccessFile(file, "r")); // update for PDFBox V 2.0... what is RandomAccessFile?
-
         parser.parse(); //parse method?
         cosDoc = parser.getDocument(); //pdf => text/doc file
         pdfStripper = new PDFTextStripper();
@@ -44,6 +43,20 @@ public class PdfManager {
     
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+    
+    public void removePage(int n)
+    {
+        try {   
+            file = new File(filePath);
+            PDDocument document = PDDocument.load(file);
+            document.removePage(0);
+            document.save("./PDF/new.pdf");
+            document.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PdfManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
