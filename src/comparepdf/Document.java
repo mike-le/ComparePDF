@@ -19,6 +19,7 @@ public class Document
 {
     private HashMap<String, Integer> frequencyTable;
     private Map<String, Integer> sortedTable;
+    private HashMap<String, List<Integer>> indexMap;
     private File file;
     private String filePath;
     private int numberofWords;
@@ -27,6 +28,7 @@ public class Document
     public Document(String fileContents, File targetFile) throws FileNotFoundException 
     {
         frequencyTable = new HashMap<String, Integer>();
+        indexMap = new HashMap<String, List<Integer>>();
         file = targetFile;
         filePath = targetFile.getPath();
         PrintWriter writer = new PrintWriter(targetFile.getPath());
@@ -53,13 +55,18 @@ public class Document
     
     public void createFrequencyTable() throws FileNotFoundException {
         Scanner s = new Scanner(file);
+        int index = 0;
         while (s.hasNext()) {
             String nextWord = s.next().toLowerCase();
-            if (containsNumber(nextWord) != true) {
+            if (containsNumber(nextWord) != true) { //use a Regex to filter this string
                 if (frequencyTable.containsKey(nextWord)) {
                     frequencyTable.put(nextWord, frequencyTable.get(nextWord) + 1);
+                    indexMap.get(nextWord).add(++index);;
                 } else {
                     frequencyTable.put(nextWord, 1);
+                    ArrayList<Integer> newIndex = new ArrayList<>();
+                    newIndex.add(++index);
+                    indexMap.put(nextWord, newIndex);
                 }
                 
             }
