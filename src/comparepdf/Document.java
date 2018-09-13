@@ -193,6 +193,7 @@ public class Document
     
     public int[][] LCSLength(String[] s1, String[] s2)
     {
+        //Instantiate matrix an fill first row and column with data O(1) -> O(n)
         int[][] LCSmatrix = new int[s1.length][s2.length];
         for (int i = 0; i < s1.length; i++) {
             LCSmatrix[i][0] = 0;
@@ -200,14 +201,17 @@ public class Document
         for (int j = 0; j < s2.length; j++) {
             LCSmatrix[0][j] = 0;
         }
+        
         for (int i = 1; i < s1.length; i++) {
             for (int j = 1; j < s2.length; j++) {
+                //if current word matches in both arrays, take the LCS of the previous word in both arrays and add 1
                 if(s1[i].equals(s2[j]))
                 {
                     LCSmatrix[i][j] = LCSmatrix[i-1][j-1] + 1;
                 }
                 else
                 {
+                    //Set current index to largest/most recent LCS
                     if(LCSmatrix[i][j-1] > LCSmatrix[i-1][j])
                     {
                         LCSmatrix[i][j] =  LCSmatrix[i][j-1];
@@ -219,14 +223,6 @@ public class Document
                 } 
             }
         }
-        /*
-        for (int i = 0; i < s1.length; i++) {
-            for (int j = 0; j < s2.length; j++) {
-                System.out.print(LCSmatrix[i][j] + " ");
-            }
-            System.out.println("");
-        }
-        */
         return LCSmatrix;
     }
     
