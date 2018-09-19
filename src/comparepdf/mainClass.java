@@ -185,10 +185,31 @@ public class mainClass
         if (e.getSource() == openButton) {
             int returnVal = fc.showOpenDialog(FileChooserDemo.this);
  
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                //This is where a real application would open the file.
-                log.append("Opening: " + file.getName() + "." + newline);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {             
+                PdfManager pdfmanager = new PdfManager();
+
+                try 
+                {
+                    File f = fc.getSelectedFile();
+                    log.append("Opening: " + f.getName() + newline);
+                    String textFromFile = pdfmanager.ToText(f);
+
+                    Document report1 = new Document(textFromFile, f);
+                    report1.createFrequencyTable();
+                    report1.sortByComparator();   
+
+                    String[] wordArr1 = report1.getWordArray();
+                    String[] wordArr2 = report1.getWordArray();
+                    int[][] LCSmatrix = report1.LCSLength(wordArr1, wordArr2);
+                    System.out.println(report1.printLCS(LCSmatrix, wordArr1, wordArr2, wordArr1.length - 1, wordArr2.length - 1));
+
+                    printJTable(report1.getMap());
+                } 
+                catch (IOException | PrinterException ex) 
+                {
+                    log.append("Failed to open file" + newline);
+                    Logger.getLogger(mainClass.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 log.append("Open command cancelled by user." + newline);
             }

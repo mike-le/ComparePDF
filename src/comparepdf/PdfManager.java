@@ -41,6 +41,19 @@ public class PdfManager {
         return Text; //returns contents of the file
     }
     
+    public String ToText(File f) throws IOException {
+        parser = new PDFParser(new RandomAccessFile(f, "r")); // update for PDFBox V 2.0... what is RandomAccessFile?
+        parser.parse(); //parse method?
+        cosDoc = parser.getDocument(); //pdf => text/doc file
+        pdfStripper = new PDFTextStripper();
+        pdDoc = new PDDocument(cosDoc);
+        pdDoc.getNumberOfPages();
+        pdfStripper.setStartPage(1);
+        pdfStripper.setEndPage(pdDoc.getNumberOfPages());
+        Text = pdfStripper.getText(pdDoc); //text file => string
+        return Text; //returns contents of the file
+    }
+    
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
