@@ -28,29 +28,26 @@ public class PdfManager {
     }
 
     public String ToText() throws IOException {
-        file = new File(filePath);
-        parser = new PDFParser(new RandomAccessFile(file, "r")); // update for PDFBox V 2.0... what is RandomAccessFile?
-        parser.parse(); //parse method?
-        cosDoc = parser.getDocument(); //pdf => text/doc file
-        pdfStripper = new PDFTextStripper();
-        pdDoc = new PDDocument(cosDoc);
+        pdDoc = PDDocument.load(new File(filePath));
+        pdfStripper = new PDFTextStripper();            
+        
         pdDoc.getNumberOfPages();
         pdfStripper.setStartPage(1);
         pdfStripper.setEndPage(pdDoc.getNumberOfPages());
         Text = pdfStripper.getText(pdDoc); //text file => string
+        pdDoc.close();
         return Text; //returns contents of the file
     }
     
     public String ToText(File f) throws IOException {
-        parser = new PDFParser(new RandomAccessFile(f, "r")); // update for PDFBox V 2.0... what is RandomAccessFile?
-        parser.parse(); //parse method?
-        cosDoc = parser.getDocument(); //pdf => text/doc file
+        pdDoc = PDDocument.load(f);
         pdfStripper = new PDFTextStripper();
-        pdDoc = new PDDocument(cosDoc);
+        
         pdDoc.getNumberOfPages();
         pdfStripper.setStartPage(1);
         pdfStripper.setEndPage(pdDoc.getNumberOfPages());
         Text = pdfStripper.getText(pdDoc); //text file => string
+        pdDoc.close();
         return Text; //returns contents of the file
     }
     

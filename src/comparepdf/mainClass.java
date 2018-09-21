@@ -133,6 +133,7 @@ public class mainClass
     JButton openButton, saveButton;
     JTextArea log;
     JFileChooser fc;
+    File[] files; 
  
     public FileChooserDemo() {
         super(new BorderLayout());
@@ -146,6 +147,8 @@ public class mainClass
  
         //Create a file chooser
         fc = new JFileChooser();
+        fc.setMultiSelectionEnabled(true);
+        files = fc.getSelectedFiles();
  
         //Uncomment one of the following lines to try a different
         //file selection mode.  The first allows just directories
@@ -183,27 +186,45 @@ public class mainClass
  
         //Handle open button action.
         if (e.getSource() == openButton) {
+            // Retrieve the selected files.
             int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+            //fc.showOpenDialog(FileChooserDemo.this);
+            File[] files = fc.getSelectedFiles();
  
             if (returnVal == JFileChooser.APPROVE_OPTION) {             
                 PdfManager pdfmanager = new PdfManager();
+                PdfManager pdfmanager2 = new PdfManager();
 
                 try 
                 {
-                    File f = fc.getSelectedFile();
-                    log.append("Opening: " + f.getName() + newline);
+                    File f = files[0];
+                    File f2 = files[1];
+                    pdfmanager.setFilePath(f.getAbsolutePath());
+                    pdfmanager2.setFilePath(f2.getAbsolutePath());
+                    log.append("Opening: " + f.getName() + " and " + f2.getName() + newline);
                     String textFromFile = pdfmanager.ToText(f);
+                    String textFromFile2 = pdfmanager.ToText(f2);
+                    
 
                     Document report1 = new Document(textFromFile, f);
                     report1.createFrequencyTable();
-                    report1.sortByComparator();   
+                    report1.sortByComparator();  
+                    
+                    Document report2 = new Document(textFromFile, f2);
+                    report2.createFrequencyTable();
+                    report2.sortByComparator();   
 
                     String[] wordArr1 = report1.getWordArray();
-                    String[] wordArr2 = report1.getWordArray();
+                    String[] wordArr2 = report2.getWordArray();
                     int[][] LCSmatrix = report1.LCSLength(wordArr1, wordArr2);
                     System.out.println(report1.printLCS(LCSmatrix, wordArr1, wordArr2, wordArr1.length - 1, wordArr2.length - 1));
-
+            
+                    double[] freqIndex = report2.compareIndex(report1, report2);
+                    System.out.println("New words added: " + freqIndex[0]);
+                    System.out.println("Deleted words: " + freqIndex[1]);
+            
                     printJTable(report1.getMap());
+                    printJTable(report2.getMap());
                 } 
                 catch (IOException | PrinterException ex) 
                 {
