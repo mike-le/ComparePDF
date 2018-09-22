@@ -28,7 +28,8 @@ public class PdfManager {
     }
 
     public String ToText() throws IOException {
-        pdDoc = PDDocument.load(new File(filePath));
+        //System.out.println(file.getAbsolutePath());
+        pdDoc = PDDocument.load(file);
         pdfStripper = new PDFTextStripper();            
         
         pdDoc.getNumberOfPages();
@@ -40,14 +41,14 @@ public class PdfManager {
     }
     
     public String ToText(File f) throws IOException {
-        pdDoc = PDDocument.load(f);
+        pdDoc = PDDocument.load(f.getAbsoluteFile());
         pdfStripper = new PDFTextStripper();
         
         pdDoc.getNumberOfPages();
         pdfStripper.setStartPage(1);
         pdfStripper.setEndPage(pdDoc.getNumberOfPages());
         Text = pdfStripper.getText(pdDoc); //text file => string
-        pdDoc.close();
+        //pdDoc.close();
         return Text; //returns contents of the file
     }
     

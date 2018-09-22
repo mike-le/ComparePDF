@@ -146,9 +146,9 @@ public class mainClass
         JScrollPane logScrollPane = new JScrollPane(log);
  
         //Create a file chooser
-        fc = new JFileChooser();
+        fc = new JFileChooser("C:\\Users\\Michael\\Documents\\Github\\ComparePDF\\PDF");
         fc.setMultiSelectionEnabled(true);
-        files = fc.getSelectedFiles();
+        //files = fc.getSelectedFiles();
  
         //Uncomment one of the following lines to try a different
         //file selection mode.  The first allows just directories
@@ -198,33 +198,35 @@ public class mainClass
                 try 
                 {
                     File f = files[0];
-                    File f2 = files[1];
-                    pdfmanager.setFilePath(f.getAbsolutePath());
-                    pdfmanager2.setFilePath(f2.getAbsolutePath());
-                    log.append("Opening: " + f.getName() + " and " + f2.getName() + newline);
+                    //File f2 = files[1];
+                    //System.out.println(f.getAbsolutePath());
+                    //System.out.println(f2.getAbsolutePath());
+                    //pdfmanager.setFilePath(f.getAbsolutePath());
+                    //pdfmanager2.setFilePath(f2.getAbsolutePath());
+                    //log.append("Opening: " + f.getName() + " and " + f2.getName() + newline);
                     String textFromFile = pdfmanager.ToText(f);
-                    String textFromFile2 = pdfmanager.ToText(f2);
-                    
+                   // String textFromFile2 = pdfmanager.ToText(f2);
 
                     Document report1 = new Document(textFromFile, f);
                     report1.createFrequencyTable();
                     report1.sortByComparator();  
                     
-                    Document report2 = new Document(textFromFile, f2);
+                    /*
+                    Document report2 = new Document(textFromFile2, f2);
                     report2.createFrequencyTable();
                     report2.sortByComparator();   
-
+                    */
                     String[] wordArr1 = report1.getWordArray();
-                    String[] wordArr2 = report2.getWordArray();
-                    int[][] LCSmatrix = report1.LCSLength(wordArr1, wordArr2);
-                    System.out.println(report1.printLCS(LCSmatrix, wordArr1, wordArr2, wordArr1.length - 1, wordArr2.length - 1));
+                    //String[] wordArr2 = report2.getWordArray();
+                    //int[][] LCSmatrix = report1.LCSLength(wordArr1, wordArr2);
+                    //System.out.println(report1.printLCS(LCSmatrix, wordArr1, wordArr2, wordArr1.length - 1, wordArr2.length - 1));
             
-                    double[] freqIndex = report2.compareIndex(report1, report2);
-                    System.out.println("New words added: " + freqIndex[0]);
-                    System.out.println("Deleted words: " + freqIndex[1]);
+                    //double[] freqIndex = report2.compareIndex(report1, report2);
+                    //System.out.println("New words added: " + freqIndex[0]);
+                    //System.out.println("Deleted words: " + freqIndex[1]);
             
                     printJTable(report1.getMap());
-                    printJTable(report2.getMap());
+                    //printJTable(report2.getMap());
                 } 
                 catch (IOException | PrinterException ex) 
                 {
