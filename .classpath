@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="dependencies/commons-logging-1.2/commons-logging-1.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="dependencies/pdfbox-2.0.8/fontbox-2.0.11.jar"/>
+	<classpathentry kind="lib" path="dependencies/pdfbox-2.0.8/pdfbox-2.0.11.jar"/>
+	<classpathentry kind="output" path="StockDrop/bin/main"/>
+</classpath>
